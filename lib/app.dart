@@ -7,6 +7,7 @@ import 'package:grocceries_app_flutter_firebase/features/auth/presentation/scree
 import 'package:grocceries_app_flutter_firebase/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:grocceries_app_flutter_firebase/features/auth/presentation/screens/splash_screen.dart';
 import 'package:grocceries_app_flutter_firebase/features/auth/presentation/screens/verification_screen.dart';
+import 'package:grocceries_app_flutter_firebase/features/products/presentation/screens/main_nav_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -29,6 +30,7 @@ class App extends StatelessWidget {
         AppConstants.routeLogin: (_) => const LoginScreen(),
         AppConstants.routeSignUp: (_) => const SignUpScreen(),
         AppConstants.routeVerification: (_) => const VerificationScreen(),
+        AppConstants.routeHome: (_) => const MainNavScreen(),
       },
       onGenerateRoute: (settings) {
         // Placeholder for routes not yet implemented

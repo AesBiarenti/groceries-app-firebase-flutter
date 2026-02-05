@@ -8,6 +8,7 @@ abstract class AppConstants {
   // Turkey
   static const String defaultLocation = 'İstanbul, Türkiye';
   static const String phoneCountryCode = '+90';
+  static const String defaultCity = 'İstanbul';
   static const String currencySymbol = '₺';
   static const String currencyCode = 'TL';
 
