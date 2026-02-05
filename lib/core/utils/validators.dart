@@ -5,10 +5,11 @@ abstract class Validators {
   static const String phoneCountryCode = '+90';
   static const int turkishMobileLength = 10;
 
-  /// Turkish mobile: 5XX XXX XX XX (10 digits, starts with 5).
+  /// Turkish mobile: 5XX XXX XX XX (10 digits, starts with 5). Accepts with or without +90.
   static String? turkishPhone(String? value) {
     if (value == null || value.isEmpty) return 'Telefon numarası gerekli';
-    final digits = value.replaceAll(RegExp(r'\D'), '');
+    var digits = value.replaceAll(RegExp(r'\D'), '');
+    if (digits.startsWith('90') && digits.length == 12) digits = digits.substring(2);
     if (digits.length != turkishMobileLength) {
       return 'Geçerli bir 10 haneli numara girin (5XX XXX XX XX)';
     }

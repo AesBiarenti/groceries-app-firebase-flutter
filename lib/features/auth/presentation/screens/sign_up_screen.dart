@@ -1,39 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:grocceries_app_flutter_firebase/core/constants/app_constants.dart';
 import 'package:grocceries_app_flutter_firebase/core/theme/app_colors.dart';
 import 'package:grocceries_app_flutter_firebase/core/utils/validators.dart';
 import 'package:grocceries_app_flutter_firebase/shared/widgets/app_button.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _phoneController = TextEditingController();
   bool _obscurePassword = true;
 
   @override
+  void initState() {
+    super.initState();
+    _phoneController.text = AppConstants.phoneCountryCode;
+  }
+
+  @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
-      // UI only: navigate to home when implemented
-      Navigator.of(context).pushReplacementNamed(AppConstants.routeHome);
+      Navigator.of(context).pushReplacementNamed(AppConstants.routeVerification);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -42,18 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 40),
-                Center(
-                  child: Image.asset(
-                    AppConstants.assetIcSplash,
-                    height: 80,
-                    width: 80,
-                    errorBuilder: (_, __, ___) => const Icon(Icons.restaurant, size: 80, color: AppColors.primary),
-                  ),
-                ),
-                const SizedBox(height: 32),
                 const Text(
-                  'Login',
+                  'Sign Up',
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
@@ -62,13 +68,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 4),
                 const Text(
-                  'Enter your email and password',
+                  'Create an account to continue',
                   style: TextStyle(
                     fontSize: 16,
                     color: AppColors.textSecondary,
                   ),
                 ),
                 const SizedBox(height: 28),
+                TextFormField(
+                  controller: _nameController,
+                  textCapitalization: TextCapitalization.words,
+                  decoration: const InputDecoration(
+                    labelText: 'Name',
+                    hintText: 'Your name',
+                  ),
+                  validator: (v) => Validators.required(v, 'Name'),
+                ),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -92,29 +108,35 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
-                  validator: (v) => Validators.required(v, 'Password'),
+                  validator: (v) => Validators.minLength(v, 6, 'Password'),
                 ),
-                const SizedBox(height: 8),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text('Forgot Password?', style: TextStyle(color: AppColors.primary)),
+                const SizedBox(height: 20),
+                TextFormField(
+                  controller: _phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: const InputDecoration(
+                    labelText: 'Phone',
+                    hintText: '${AppConstants.phoneCountryCode} 5XX XXX XX XX',
                   ),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'[\d\s+]')),
+                    LengthLimitingTextInputFormatter(18),
+                  ],
+                  validator: Validators.turkishPhone,
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 32),
                 AppButton(
-                  label: 'Log In',
+                  label: 'Sign Up',
                   onPressed: _submit,
                 ),
                 const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text('Don\'t have an account? ', style: TextStyle(color: AppColors.textSecondary)),
+                    const Text('Already have an account? ', style: TextStyle(color: AppColors.textSecondary)),
                     TextButton(
-                      onPressed: () => Navigator.of(context).pushReplacementNamed(AppConstants.routeSignUp),
-                      child: const Text('Sign up', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600)),
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Login', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600)),
                     ),
                   ],
                 ),

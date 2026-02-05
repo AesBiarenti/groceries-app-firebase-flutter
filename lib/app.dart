@@ -4,7 +4,9 @@ import 'package:grocceries_app_flutter_firebase/core/constants/app_constants.dar
 import 'package:grocceries_app_flutter_firebase/core/theme/app_theme.dart';
 import 'package:grocceries_app_flutter_firebase/features/auth/presentation/screens/login_screen.dart';
 import 'package:grocceries_app_flutter_firebase/features/auth/presentation/screens/onboarding_screen.dart';
+import 'package:grocceries_app_flutter_firebase/features/auth/presentation/screens/sign_up_screen.dart';
 import 'package:grocceries_app_flutter_firebase/features/auth/presentation/screens/splash_screen.dart';
+import 'package:grocceries_app_flutter_firebase/features/auth/presentation/screens/verification_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -25,6 +27,8 @@ class App extends StatelessWidget {
         AppConstants.routeSplash: (_) => const SplashScreen(),
         AppConstants.routeOnboarding: (_) => const OnboardingScreen(),
         AppConstants.routeLogin: (_) => const LoginScreen(),
+        AppConstants.routeSignUp: (_) => const SignUpScreen(),
+        AppConstants.routeVerification: (_) => const VerificationScreen(),
       },
       onGenerateRoute: (settings) {
         // Placeholder for routes not yet implemented
