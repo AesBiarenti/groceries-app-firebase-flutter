@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grocceries_app_flutter_firebase/core/constants/app_constants.dart';
 import 'package:grocceries_app_flutter_firebase/core/theme/app_colors.dart';
+import 'package:grocceries_app_flutter_firebase/features/cart/presentation/screens/cart_screen.dart';
 import 'package:grocceries_app_flutter_firebase/features/products/presentation/screens/home_screen.dart';
 
 class MainNavScreen extends StatefulWidget {
@@ -29,8 +30,8 @@ class _MainNavScreenState extends State<MainNavScreen> {
         children: const [
           HomeScreen(),
           _PlaceholderScreen('Explore'),
-          _PlaceholderScreen('Cart'),
-          _PlaceholderScreen('Favourites'),
+          CartScreen(),
+          _PlaceholderScreen('Favourite'),
           _PlaceholderScreen('Account'),
         ],
       ),
@@ -56,22 +57,31 @@ class _MainNavScreenState extends State<MainNavScreen> {
                   onTap: () => setState(() => _currentIndex = index),
                   borderRadius: BorderRadius.circular(12),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
                           _navItems[index].icon,
                           size: 26,
-                          color: _currentIndex == index ? AppColors.primary : AppColors.textSecondary,
+                          color: _currentIndex == index
+                              ? AppColors.primary
+                              : AppColors.textSecondary,
                         ),
                         const SizedBox(height: 4),
                         Text(
                           _navItems[index].label,
                           style: TextStyle(
                             fontSize: 12,
-                            color: _currentIndex == index ? AppColors.primary : AppColors.textSecondary,
-                            fontWeight: _currentIndex == index ? FontWeight.w600 : FontWeight.normal,
+                            color: _currentIndex == index
+                                ? AppColors.primary
+                                : AppColors.textSecondary,
+                            fontWeight: _currentIndex == index
+                                ? FontWeight.w600
+                                : FontWeight.normal,
                           ),
                         ),
                       ],
@@ -108,13 +118,19 @@ class _PlaceholderScreen extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(fontSize: 24, color: AppColors.textSecondary),
+              style: const TextStyle(
+                fontSize: 24,
+                color: AppColors.textSecondary,
+              ),
             ),
             if (title == 'Account') ...[
               const SizedBox(height: 24),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(AppConstants.routeLogin, (route) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    AppConstants.routeLogin,
+                    (route) => false,
+                  );
                 },
                 child: const Text('Çıkış yap / Login'),
               ),
