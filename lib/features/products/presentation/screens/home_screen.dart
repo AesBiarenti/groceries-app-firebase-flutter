@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:grocceries_app_flutter_firebase/core/constants/app_constants.dart';
 import 'package:grocceries_app_flutter_firebase/core/theme/app_colors.dart';
+import 'package:grocceries_app_flutter_firebase/features/products/presentation/screens/product_detail_screen.dart';
 import 'package:grocceries_app_flutter_firebase/features/products/presentation/widgets/product_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  static void _openProductDetail(BuildContext context, int index, String prefix) {
+    final p = _exclusiveProducts[index];
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ProductDetailScreen(
+          productId: '$prefix-$index',
+          name: p['name'] as String,
+          unit: p['unit'] as String,
+          price: (p['price'] as num).toDouble(),
+          imageAsset: p['image'] as String,
+        ),
+      ),
+    );
+  }
 
   static final List<Map<String, dynamic>> _exclusiveProducts = [
     {'name': 'Organic Bananas', 'unit': '7pcs', 'price': 4.99, 'image': AppConstants.assetIcBanana},
@@ -149,6 +165,7 @@ class HomeScreen extends StatelessWidget {
                         unit: p['unit'] as String,
                         price: (p['price'] as num).toDouble(),
                         imageAsset: p['image'] as String,
+                        onTap: () => _openProductDetail(context, index, 'ex'),
                         onAdd: () {},
                       ),
                     );
@@ -195,6 +212,7 @@ class HomeScreen extends StatelessWidget {
                         unit: p['unit'] as String,
                         price: (p['price'] as num).toDouble(),
                         imageAsset: p['image'] as String,
+                        onTap: () => _openProductDetail(context, index, 'best'),
                         onAdd: () {},
                       ),
                     );
@@ -241,6 +259,7 @@ class HomeScreen extends StatelessWidget {
                         unit: p['unit'] as String,
                         price: (p['price'] as num).toDouble(),
                         imageAsset: p['image'] as String,
+                        onTap: () => _openProductDetail(context, index, 'grocery'),
                         onAdd: () {},
                       ),
                     );

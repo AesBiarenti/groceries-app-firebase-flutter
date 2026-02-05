@@ -9,6 +9,7 @@ class ProductCard extends StatelessWidget {
   final double price;
   final String imageAsset;
   final VoidCallback? onAdd;
+  final VoidCallback? onTap;
 
   const ProductCard({
     super.key,
@@ -18,6 +19,7 @@ class ProductCard extends StatelessWidget {
     required this.price,
     required this.imageAsset,
     this.onAdd,
+    this.onTap,
   });
 
   @override
@@ -36,13 +38,16 @@ class ProductCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 80,
-            child: Center(
-              child: Image.asset(
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 80,
+              child: Center(
+                child: Image.asset(
                 imageAsset,
                 fit: BoxFit.contain,
                 errorBuilder: (_, __, ___) => const Icon(Icons.image_not_supported, size: 48),
@@ -94,6 +99,7 @@ class ProductCard extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 }
